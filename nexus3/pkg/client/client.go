@@ -135,3 +135,21 @@ func (c *Client) Put(endpoint string, payload io.Reader) ([]byte, *http.Response
 func (c *Client) Delete(endpoint string) ([]byte, *http.Response, error) {
 	return c.execute(http.MethodDelete, endpoint, nil)
 }
+
+// RetryMaxAttempts returns the maximum number of retry attempts for operations.
+// Returns the configured value or 5 as default.
+func (c *Client) RetryMaxAttempts() int {
+	if c.config.RetryMaxAttempts != nil {
+		return *c.config.RetryMaxAttempts
+	}
+	return 5
+}
+
+// RetryWaitMs returns the initial wait time in milliseconds between retries.
+// Returns the configured value or 500 as default.
+func (c *Client) RetryWaitMs() int {
+	if c.config.RetryWaitMs != nil {
+		return *c.config.RetryWaitMs
+	}
+	return 500
+}
